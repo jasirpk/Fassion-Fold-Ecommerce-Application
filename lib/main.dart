@@ -12,7 +12,9 @@ void main() async {
   var directory = await getApplicationDocumentsDirectory();
   Hive.init(directory.path);
   Hive.registerAdapter(ProductsModelAdapter());
+
   await Hive.openBox<ProductsModel>('products');
+  await Hive.openBox<ProductsModel>('carts');
 
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(create: (_) => BottomNavBarState()),

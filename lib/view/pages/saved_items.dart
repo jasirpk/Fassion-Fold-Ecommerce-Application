@@ -153,6 +153,8 @@ class SavedItems extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
                                     children: [
                                       Flexible(
                                         child: Text(
@@ -166,6 +168,15 @@ class SavedItems extends StatelessWidget {
                                       IconButton(
                                         onPressed: () {
                                           box.delete(product.key);
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(
+                                            SnackBar(
+                                              backgroundColor: Colors.red,
+                                              content: Text(
+                                                  'item removed from saved items'),
+                                              duration: Duration(seconds: 2),
+                                            ),
+                                          );
                                         },
                                         icon: Icon(
                                           IconlyLight.delete,
@@ -208,7 +219,34 @@ class SavedItems extends StatelessWidget {
                                   ),
                                   SizedBox(height: 8),
                                   ElevatedButton(
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      final data = ProductsModel(
+                                        image: product.image,
+                                        title: product.title,
+                                        price: product.price,
+                                      );
+                                      final cart = Boxes.getCart();
+                                      cart.add(data);
+                                      print(cart);
+                                      final productKey = product.key as int;
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        SnackBar(
+                                          backgroundColor: Colors.blue,
+                                          content: Text(
+                                              '${product.title} has been added to your cart!'),
+                                          duration: Duration(seconds: 2),
+                                          action: SnackBarAction(
+                                            label: 'Undo',
+                                            onPressed: () {
+                                              // Add the item back to favorites if Undo is pressed
+                                              box.put(productKey, product);
+                                            },
+                                          ),
+                                        ),
+                                      );
+                                      box.delete(product.key);
+                                    },
                                     style: ElevatedButton.styleFrom(
                                       backgroundColor: Colors.black,
                                       minimumSize: Size(double.infinity, 50),
