@@ -82,10 +82,12 @@ class AllProdutsWidget extends StatelessWidget {
                                 height: screenHeight * 0.3,
                               ),
                               Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                padding: EdgeInsets.all(8.0),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
+                                    SizedBox(),
                                     Icon(
                                       CupertinoIcons.heart,
                                       size: 30,

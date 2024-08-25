@@ -118,28 +118,34 @@ class _ProductsState extends State<Products> {
                                     children: [
                                       SizedBox(),
                                       IconButton(
-                                          onPressed: () {
-                                            favoriteProvider
-                                                .toggleFavorite(index);
-                                            if (!isFavorite) {
-                                              var data = ProductsModel(
-                                                image: category.image,
-                                                title: category.title,
-                                                price:
-                                                    category.price.toString(),
-                                              );
-                                              productBox.add(data);
-                                              print('data saved $data');
-                                            } else {
-                                              print('removed from saved');
-                                            }
-                                          },
-                                          icon: isFavorite
-                                              ? Icon(
-                                                  CupertinoIcons.heart_fill,
-                                                  color: Colors.teal,
-                                                )
-                                              : Icon(CupertinoIcons.heart)),
+                                        onPressed: () {
+                                          final favoriteProvider =
+                                              Provider.of<FavoriteProvider>(
+                                                  context,
+                                                  listen: false);
+                                          favoriteProvider
+                                              .toggleFavorite(index);
+                                          bool isFavorite = favoriteProvider
+                                              .isFavorite(index);
+
+                                          var data = ProductsModel(
+                                            image: category.image,
+                                            title: category.title,
+                                            price: category.price.toString(),
+                                          );
+
+                                          if (isFavorite) {
+                                            // If the item is not in favorites, add it
+                                            productBox.add(data);
+                                            print(
+                                                'Item added to favorites: $data');
+                                          } else {}
+                                        },
+                                        icon: isFavorite
+                                            ? Icon(CupertinoIcons.heart_fill,
+                                                color: Colors.teal)
+                                            : Icon(CupertinoIcons.heart),
+                                      ),
                                     ],
                                   ),
                                 ),
@@ -175,7 +181,7 @@ class _ProductsState extends State<Products> {
                               style: TextStyle(fontWeight: FontWeight.w500),
                             ),
                             Text(
-                              category.price.toString(),
+                              "€ ${category.price.toString()}",
                               overflow: TextOverflow.ellipsis,
                               maxLines: 1,
                               style: TextStyle(fontWeight: FontWeight.w500),

@@ -2,6 +2,7 @@ import 'package:fassion_fold/model/hive/model.dart';
 import 'package:fassion_fold/view/pages/bottom_navigation.dart';
 import 'package:fassion_fold/view_model/bottom_navbar.dart';
 import 'package:fassion_fold/view_model/favorite_provider.dart';
+import 'package:fassion_fold/view_model/quantity.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:path_provider/path_provider.dart';
@@ -18,7 +19,8 @@ void main() async {
 
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(create: (_) => BottomNavBarState()),
-    ChangeNotifierProvider(create: (_) => FavoriteProvider())
+    ChangeNotifierProvider(create: (_) => FavoriteProvider()),
+    ChangeNotifierProvider(create: (_) => QuantityCount())
   ], child: FasionFold()));
 }
 
